@@ -4,6 +4,8 @@ import com.robertobouses.blue_salary.domain.model.Employee;
 import com.robertobouses.blue_salary.infrastructure.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import java.util.UUID;
 
 @Service
@@ -19,4 +21,8 @@ public class EmployeeService {
         Employee employee = new Employee(UUID.randomUUID(), name, lastName);
         return employeeRepository.save(employee);
     }
+    
+    public List<Employee> getAllEmployees() {
+    return employeeRepository.findAll();
+}
 }
