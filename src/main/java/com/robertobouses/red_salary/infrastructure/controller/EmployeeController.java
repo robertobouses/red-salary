@@ -40,20 +40,26 @@ public class EmployeeController {
         public Long roleId;
         public String bankAccount;
         public Status status;
-    }
-public Long getDepartmentId() { return departmentId; }
-    public Long getRoleId()       { return roleId; }
-
+        public Long getDepartmentId() { return departmentId; }
+        public Long getRoleId()       { return roleId; }
+}
+    
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody CreateEmployeeRequest request) {
+        Department department = new Department();
+        department.setId(request.getDepartmentId());
+    
+        Role role = new Role();
+        role.setId(request.getRoleId());
+        
         Employee employee = employeeService.createEmployee(
                 request.name,
                 request.lastName,
                 request.email,
                 request.photoUrl,
                 request.jobTitle,
-                request.department,
-                request.role,
+                department,
+                role,
                 request.bankAccount,
                 request.status
         );
