@@ -1,10 +1,10 @@
-package com.robertobouses.blue_salary;
+package com.robertobouses.red_salary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BlueSalaryApplicationTests {
+class RedSalaryApplicationTests {
 
 	@Test
 	void contextLoads() {

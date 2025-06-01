@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.robertobouses</groupId>
-	<artifactId>blue-salary</artifactId>
+	<artifactId>red-salary</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Blue Salary</name>
+	<name>Red Salary</name>
 	<description>Salary tracking app with Spring Boot and PostgreSQL</description>
 	<url/>
 	<licenses>
@@ -71,12 +71,15 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.robertobouses.RedSalaryApplication</mainClass>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 </project>
