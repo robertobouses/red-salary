@@ -1,6 +1,6 @@
 HEXAGONAL ARQUITECTURE
 
-src/main/java/com/tuempresa/bluesalary/
+src/main/java/com/tuempresa/redsalary/
 │
 ├── application/            ← Lógica de negocio (casos de uso)
 │   └── service/
@@ -23,6 +23,6 @@ src/main/java/com/tuempresa/bluesalary/
 ├── api/                    ← Controladores REST (Adaptador de entrada)
 │   └── SalaryController.java
 │
-└── BlueSalaryApplication.java  ← Punto de entrada
+└── RedSalaryApplication.java  ← Punto de entrada
 │
 └── docs

@@ -1,4 +1,4 @@
-package com.robertobouses.blue_salary.config;
+package com.robertobouses.red_salary.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.robertobouses.blue_salary.domain.model;
+package com.robertobouses.red_salary.domain.model;
 
 import jakarta.persistence.*;
 

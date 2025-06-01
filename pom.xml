@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.robertobouses</groupId>
-	<artifactId>blue-salary</artifactId>
+	<artifactId>red-salary</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Blue Salary</name>
+	<name>Red Salary</name>
 	<description>Salary tracking app with Spring Boot and PostgreSQL</description>
 	<url/>
 	<licenses>

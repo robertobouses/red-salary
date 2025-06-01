@@ -1,7 +1,7 @@
-package com.robertobouses.blue_salary.infrastructure.controller;
+package com.robertobouses.red_salary.infrastructure.controller;
 
-import com.robertobouses.blue_salary.application.service.DepartmentService;
-import com.robertobouses.blue_salary.domain.model.Department;
+import com.robertobouses.red_salary.application.service.DepartmentService;
+import com.robertobouses.red_salary.domain.model.Department;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
