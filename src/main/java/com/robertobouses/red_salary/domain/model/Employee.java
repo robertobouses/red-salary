@@ -1,21 +1,24 @@
 package com.robertobouses.red_salary.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+import java.math.BigDecimal;
 import java.util.UUID;
+
+import com.robertobouses.red_salary.domain.model.agreement.JobCategory;
 
 @Entity
 @Table(name = "employees")
+@Data
+@NoArgsConstructor
+@Builder
 public class Employee {
 
     @Id
@@ -43,13 +46,17 @@ public class Employee {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "job_category_id")
+    private JobCategory jobCategory;
+
     @Pattern(
         regexp = "^[A-Z]{2}\\d{2}[A-Z0-9]{1,30}$",
         message = "Invalid bank account format"
     )
     private String bankAccount;
 
-   @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public enum Status {
@@ -57,13 +64,25 @@ public class Employee {
         LEAVE,
         FIRED,
         VACATION
-    }
+    }    
 
-    public Employee() {}
+    @Column(name = "gross_annual_salary")
+    private BigDecimal grossAnnualSalary;
 
-    public Employee(UUID id, String name, String lastName, String email, String photoUrl,
-                    String jobTitle, Department department, Role role,
-                    String bankAccount, Status status) {
+    public Employee(
+        UUID id,
+        String name,
+        String lastName,
+        String email,
+        String photoUrl,
+        String jobTitle,
+        Department department,
+        Role role,
+        JobCategory jobCategory,
+        String bankAccount,
+        Status status,
+        BigDecimal grossAnnualSalary
+    ) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -72,88 +91,9 @@ public class Employee {
         this.jobTitle = jobTitle;
         this.department = department;
         this.role = role;
+        this.jobCategory = jobCategory;
         this.bankAccount = bankAccount;
         this.status = status;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public String getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
+        this.grossAnnualSalary = grossAnnualSalary;
     }
 }

@@ -1,0 +1,43 @@
+version: '3'
+
+tasks:
+  up:
+    desc: Levanta los servicios definidos en docker-compose
+    cmds:
+      - docker-compose up -d
+
+  down:
+    desc: Detiene y elimina los contenedores
+    cmds:
+      - docker-compose down
+
+  restart:
+    desc: Reinicia los servicios
+    cmds:
+      - task: down
+      - task: up
+
+  logs:
+    desc: Muestra los logs de PostgreSQL
+    cmds:
+      - docker-compose logs -f
+
+  clean:
+    desc: Elimina contenedores, imágenes y volúmenes relacionados
+    cmds:
+      - docker-compose down -v --rmi all --remove-orphans
+
+  psql:
+    desc: Entra al cliente psql del contenedor PostgreSQL
+    cmds:
+      - docker exec -it red-salary-postgres psql -U postgres -d red_salary_db
+  ps:
+    desc: Lista los contenedores activos
+    cmds:
+      - docker ps
+
+  restart:
+    desc: Reinicia el contenedor de PostgreSQL
+    cmds:
+      - docker-compose down
+      - docker-compose up -d
