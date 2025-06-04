@@ -2,10 +2,13 @@ package com.robertobouses.red_salary.domain.model.agreement;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.robertobouses.red_salary.domain.model.Payroll;
 
 
 @Entity
@@ -33,6 +36,13 @@ public class SalaryComplement {
     @ManyToOne
     @JoinColumn(name = "job_category_id")
     private JobCategory jobCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "payroll_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Payroll payroll;
+
 
    public void updateAmountFromBaseSalary(BigDecimal baseSalary) {
     if (type == ComplementType.PERCENTAGE && percentage != null) {

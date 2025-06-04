@@ -12,6 +12,7 @@ import lombok.Builder;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.robertobouses.red_salary.domain.model.agreement.Agreement;
 import com.robertobouses.red_salary.domain.model.agreement.JobCategory;
 
 @Entity
@@ -71,4 +72,8 @@ public class Employee {
     private BigDecimal grossAnnualSalary;
 
     private BigDecimal personalComplement;
+
+    @ManyToOne
+    @JoinColumn(name = "agreement_id")
+    private Agreement agreement;
 }
