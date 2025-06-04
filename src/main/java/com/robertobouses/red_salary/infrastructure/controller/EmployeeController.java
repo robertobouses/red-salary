@@ -1,13 +1,15 @@
 package com.robertobouses.red_salary.infrastructure.controller;
 
 import com.robertobouses.red_salary.application.service.EmployeeService;
-import com.robertobouses.red_salary.domain.model.Department;
 import com.robertobouses.red_salary.domain.model.Employee;
-import com.robertobouses.red_salary.domain.model.Role;
 import com.robertobouses.red_salary.domain.model.Employee.Status;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -19,16 +21,11 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello World!";
-    }
-
-    @GetMapping
-    public ResponseEntity<Iterable<Employee>> getAllEmployees() {
-        Iterable<Employee> employees = employeeService.getAllEmployees();
-        return new ResponseEntity<>(employees, HttpStatus.OK);
-    }
+    // @GetMapping
+    // public ResponseEntity<Iterable<Employee>> getAllEmployees() {
+    //     Iterable<Employee> employees = employeeService.getAllEmployees();
+    //     return new ResponseEntity<>(employees, HttpStatus.OK);
+    // }
 
     public static class CreateEmployeeRequest {
         public String name;
@@ -38,30 +35,26 @@ public class EmployeeController {
         public String jobTitle;
         public Long departmentId;
         public Long roleId;
+        public UUID jobCategoryId; 
         public String bankAccount;
         public Status status;
-        public Long getDepartmentId() { return departmentId; }
-        public Long getRoleId()       { return roleId; }
-}
-    
+        public BigDecimal grossAnnualSalary;
+    }
+
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody CreateEmployeeRequest request) {
-        Department department = new Department();
-        department.setId(request.getDepartmentId());
-    
-        Role role = new Role();
-        role.setId(request.getRoleId());
-        
         Employee employee = employeeService.createEmployee(
-                request.name,
-                request.lastName,
-                request.email,
-                request.photoUrl,
-                request.jobTitle,
-                department,
-                role,
-                request.bankAccount,
-                request.status
+            request.name,
+            request.lastName,
+            request.email,
+            request.photoUrl,
+            request.jobTitle,
+            request.departmentId,
+            request.roleId,
+            request.jobCategoryId, 
+            request.bankAccount,
+            request.status,
+            request.grossAnnualSalary
         );
         return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
