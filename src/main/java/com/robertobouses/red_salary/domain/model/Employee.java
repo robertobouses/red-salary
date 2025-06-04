@@ -18,6 +18,7 @@ import com.robertobouses.red_salary.domain.model.agreement.JobCategory;
 @Table(name = "employees")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Employee {
 
@@ -64,36 +65,10 @@ public class Employee {
         LEAVE,
         FIRED,
         VACATION
-    }    
+    }
 
     @Column(name = "gross_annual_salary")
     private BigDecimal grossAnnualSalary;
 
-    public Employee(
-        UUID id,
-        String name,
-        String lastName,
-        String email,
-        String photoUrl,
-        String jobTitle,
-        Department department,
-        Role role,
-        JobCategory jobCategory,
-        String bankAccount,
-        Status status,
-        BigDecimal grossAnnualSalary
-    ) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.photoUrl = photoUrl;
-        this.jobTitle = jobTitle;
-        this.department = department;
-        this.role = role;
-        this.jobCategory = jobCategory;
-        this.bankAccount = bankAccount;
-        this.status = status;
-        this.grossAnnualSalary = grossAnnualSalary;
-    }
+    private BigDecimal personalComplement;
 }

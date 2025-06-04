@@ -58,32 +58,32 @@ public class EmployeeService {
     JobCategory jobCategory = jobCategoryRepository.findById(jobCategoryId)
             .orElseThrow(() -> new IllegalArgumentException("Job category not found"));
 
-    BigDecimal convenioSalary = calculateMinimumSalary(jobCategory);
+    BigDecimal agreementSalary = calculateMinimumSalary(jobCategory);
 
-    // Si grossAnnualSalary es null, se usa el mínimo convenio
-    if (grossAnnualSalary == null) {
-        grossAnnualSalary = convenioSalary;
+      BigDecimal personalComplement = BigDecimal.ZERO;
+
+    if (grossAnnualSalary == null || grossAnnualSalary.compareTo(agreementSalary) < 0) {
+        grossAnnualSalary = agreementSalary;
     } else {
-        // Compara y toma el mayor entre lo enviado y lo del convenio
-        if (grossAnnualSalary.compareTo(convenioSalary) < 0) {
-            grossAnnualSalary = convenioSalary;
-        }
+        BigDecimal difference = grossAnnualSalary.subtract(agreementSalary);
+        personalComplement = difference.divide(BigDecimal.valueOf(12), 2, BigDecimal.ROUND_HALF_UP);
     }
 
-    Employee employee = new Employee(
-        UUID.randomUUID(),
-        name,
-        lastName,
-        email,
-        photoUrl,
-        jobTitle,
-        department,
-        role,
-        jobCategory,
-        bankAccount,
-        status,
-        grossAnnualSalary
-    );
+    Employee employee = Employee.builder()
+            .id(UUID.randomUUID())
+            .name(name)
+            .lastName(lastName)
+            .email(email)
+            .photoUrl(photoUrl)
+            .jobTitle(jobTitle)
+            .department(department)
+            .role(role)
+            .jobCategory(jobCategory)
+            .bankAccount(bankAccount)
+            .status(status)
+            .grossAnnualSalary(grossAnnualSalary)
+            .personalComplement(personalComplement)
+            .build();
 
     return employeeRepository.save(employee);
 }
@@ -100,7 +100,6 @@ private BigDecimal calculateMinimumSalary(JobCategory jobCategory) {
         }
     }
 
-    // Solo 12 pagas, sin extras por ahora
     int basePayments = 12;
 
     return baseSalary.add(complementsTotal).multiply(BigDecimal.valueOf(basePayments));
