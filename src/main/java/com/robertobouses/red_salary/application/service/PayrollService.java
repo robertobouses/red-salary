@@ -52,12 +52,10 @@ public class PayrollService {
                 .build();
 
         List<SalaryComplement> allComplements = new ArrayList<>();
-        allComplements.addAll(employee.getJobCategory().getComplements());
         if (employee.getAgreement() != null && employee.getAgreement().getComplements() != null) {
             allComplements.addAll(employee.getAgreement().getComplements());
         }
 
-        // Construir lista de PayrollSalaryComplement (datos planos)
         List<PayrollSalaryComplement> complementRecords = new ArrayList<>();
 
         for (SalaryComplement complement : allComplements) {

@@ -1,7 +1,6 @@
 package com.robertobouses.red_salary.infrastructure.controller;
 
 import com.robertobouses.red_salary.domain.model.agreement.Agreement;
-import com.robertobouses.red_salary.domain.model.agreement.ComplementType;
 import com.robertobouses.red_salary.domain.model.agreement.JobCategory;
 import com.robertobouses.red_salary.domain.model.agreement.SalaryComplement;
 import com.robertobouses.red_salary.infrastructure.repository.AgreementRepository;
@@ -20,36 +19,28 @@ public class AgreementController {
     private AgreementRepository agreementRepository;
 
     @PostMapping
-public ResponseEntity<Agreement> createAgreement(@RequestBody Agreement agreement) {
+    public ResponseEntity<Agreement> createAgreement(@RequestBody Agreement agreement) {
 
-    if (agreement.getJobCategories() != null) {
-        for (JobCategory category : agreement.getJobCategories()) {
-    category.setAgreement(agreement);
-
-    if (category.getComplements() != null) {
-        for (SalaryComplement complement : category.getComplements()) {
-            complement.setAgreement(agreement);
-            complement.setJobCategory(category);  
-            if (complement.getType() == ComplementType.PERCENTAGE && category.getBaseSalary() != null) {
-                complement.updateAmountFromBaseSalary(category.getBaseSalary());
+        if (agreement.getJobCategories() != null) {
+            for (JobCategory category : agreement.getJobCategories()) {
+                category.setAgreement(agreement);
             }
         }
-    }
-}
-    }
 
-    if (agreement.getComplements() != null) {
-        for (SalaryComplement complement : agreement.getComplements()) {
-            complement.setAgreement(agreement);
+        if (agreement.getComplements() != null) {
+            for (SalaryComplement complement : agreement.getComplements()) {
+                complement.setAgreement(agreement);
+            }
         }
+
+        System.out.println("Agreement-level complements:");
+        for (SalaryComplement c : agreement.getComplements()) {
+            System.out.println("-> " + c.getName() + " | type: " + c.getType() + " | amount: " + c.getAmount());
+        }
+
+        Agreement saved = agreementRepository.save(agreement);
+        return ResponseEntity.created(URI.create("/api/agreements/" + saved.getId())).body(saved);
     }
-    System.out.println("Agreement-level complements:");
-    for (SalaryComplement c : agreement.getComplements()) {
-    System.out.println("-> " + c.getName() + " | type: " + c.getType() + " | amount: " + c.getAmount());
-}
-    Agreement saved = agreementRepository.save(agreement);
-    return ResponseEntity.created(URI.create("/api/agreements/" + saved.getId())).body(saved);
-}
 
     @GetMapping
     public List<Agreement> getAllAgreements() {

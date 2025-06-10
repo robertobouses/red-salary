@@ -92,8 +92,8 @@ private BigDecimal calculateMinimumSalary(JobCategory jobCategory) {
     BigDecimal baseSalary = jobCategory.getBaseSalary() != null ? jobCategory.getBaseSalary() : BigDecimal.ZERO;
 
     BigDecimal complementsTotal = BigDecimal.ZERO;
-    if (jobCategory.getComplements() != null) {
-        for (var complement : jobCategory.getComplements()) {
+    if (jobCategory.getAgreement() != null && jobCategory.getAgreement().getComplements() != null) {
+        for (var complement : jobCategory.getAgreement().getComplements()) {
             if (complement.getAmount() != null) {
                 complementsTotal = complementsTotal.add(complement.getAmount());
             }
@@ -103,4 +103,5 @@ private BigDecimal calculateMinimumSalary(JobCategory jobCategory) {
     int basePayments = 12;
 
     return baseSalary.add(complementsTotal).multiply(BigDecimal.valueOf(basePayments));
-}}
+}
+}

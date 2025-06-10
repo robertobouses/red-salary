@@ -40,9 +40,9 @@ public class Payroll {
     private BigDecimal personalComplement;
 
     @OneToMany(mappedBy = "payroll", cascade = CascadeType.ALL, orphanRemoval = true)
-@ToString.Exclude
-@EqualsAndHashCode.Exclude
-private List<PayrollSalaryComplement> salaryComplements;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<PayrollSalaryComplement> salaryComplements;
 
 
 

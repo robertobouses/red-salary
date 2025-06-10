@@ -2,14 +2,11 @@ package com.robertobouses.red_salary.domain.model.agreement;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.robertobouses.red_salary.domain.model.Payroll;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Data
@@ -28,23 +25,13 @@ public class SalaryComplement {
 
     private BigDecimal amount;
 
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agreement_id")
+    @JsonBackReference
     private Agreement agreement;
 
-    @ManyToOne
-    @JoinColumn(name = "job_category_id")
-    private JobCategory jobCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "payroll_id")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Payroll payroll;
-
-
-   public void updateAmountFromBaseSalary(BigDecimal baseSalary) {
+    public void updateAmountFromBaseSalary(BigDecimal baseSalary) {
     if (type == ComplementType.PERCENTAGE && percentage != null) {
         this.amount = baseSalary.multiply(percentage).divide(BigDecimal.valueOf(100));
     }

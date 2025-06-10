@@ -1,6 +1,5 @@
 package com.robertobouses.red_salary.infrastructure.repository;
 
-
 import com.robertobouses.red_salary.domain.model.agreement.SalaryComplement;
 import com.robertobouses.red_salary.infrastructure.controller.dto.SalaryComplementDTO;
 
@@ -14,7 +13,7 @@ import java.util.UUID;
 public interface SalaryComplementRepository extends JpaRepository<SalaryComplement, UUID> {
 
     @Query("SELECT new com.robertobouses.red_salary.infrastructure.controller.dto.SalaryComplementDTO(sc.name, sc.amount) " +
-       "FROM SalaryComplement sc WHERE sc.payroll.id = :payrollId")
-List<SalaryComplementDTO> findSalaryComplementsByPayrollId(@Param("payrollId") UUID payrollId);
+           "FROM SalaryComplement sc WHERE sc.agreement.id = :agreementId")
+    List<SalaryComplementDTO> findSalaryComplementsByAgreementId(@Param("agreementId") UUID agreementId);
 
 }

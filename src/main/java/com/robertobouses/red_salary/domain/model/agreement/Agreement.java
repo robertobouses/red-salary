@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Data
 public class Agreement {
@@ -24,5 +26,7 @@ public class Agreement {
     private List<JobCategory> jobCategories;
 
     @OneToMany(mappedBy = "agreement", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<SalaryComplement> complements;
+
 }
